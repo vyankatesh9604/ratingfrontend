@@ -3,16 +3,20 @@ import './login.css'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
 
+
 const Login = () => {
 	const[email,setEmail]=useState('')
 	const[password,setPassword]=useState('')
 	const getlogin = (e)=>{
 		e.preventDefault()
-		console.log(email,password)
-		axios.post('/users/signin', { email, password })
-      .then(res => {
-        console.log(res);
-    
+		axios.post('/users/signin', {email:email, password:password})
+      	.then((res) => {
+			if(res.data.status==="fail"){
+				alert(res.data.message)
+			}else{
+				alert("Logged IN sucessfully")
+			}
+			
       })
 	}
 	return (

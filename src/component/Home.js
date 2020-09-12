@@ -8,7 +8,7 @@ const Home = () => {
        <div>
            <Navbar></Navbar>
        <div>
-           <img src={image} style={{width:'100%',marginTop:10}}></img>
+           <img src={image} style={{width:'100%',marginTop:10}} alt={image}></img>
        </div>
        </div>
     )

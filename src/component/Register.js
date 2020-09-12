@@ -11,10 +11,13 @@ const Register = () => {
 	
 	const getregister =(e) =>{
 		e.preventDefault()
-		console.log(name,email,password)
 		axios.post('/users/signup',{name:name,email:email,password:password})
 		.then((res)=>{
-			console.log(res)
+			if(res.data.status==="fail"){
+				alert(res.data.message)
+			}else{
+				alert("Register sucessfully")
+			}
 		})
 	}
 
