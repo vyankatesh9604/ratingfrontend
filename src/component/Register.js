@@ -1,24 +1,43 @@
 import React, { useState } from 'react'  
 import './register.css'
-import { Link } from 'react-router-dom';
+import { Link,useHistory } from 'react-router-dom';
 import axios from'axios';
+import { GoogleLogin } from 'react-google-login';
 
 
 const Register = () => {
+	const history =useHistory()
 	const [name,setName]= useState('')
 	const [email,setEmail]=useState('')
 	const [password,setPassword]=useState('')	
 	
+	
 	const getregister =(e) =>{
+		
 		e.preventDefault()
 		axios.post('/users/signup',{name:name,email:email,password:password})
 		.then((res)=>{
 			if(res.data.status==="fail"){
 				alert(res.data.message)
 			}else{
-				alert("Register sucessfully")
+				history.push('/')
 			}
 		})
+	}
+	const responseSucessGoogle = (response) =>{
+		const {email,name,googleId}=response.profileObj
+		axios.post('/users/googlesignin',{email,name,password:googleId})
+		.then((res)=>{
+			if(res.data.status==="fail"){
+				alert(res.data.message)
+			}else{
+				history.push('/home')
+			}
+		})
+		
+	}
+	const responseErrorGoogle = (response) =>{
+		console.log(response)
 	}
 
 	return (
@@ -43,7 +62,16 @@ const Register = () => {
 							</div>
 							<button className="btn btn-primary btn-block" type='submit'>Register</button>
                             <label>Already Have Account</label>
-                            <Link to="/" style={{color:'blue',marginTop:20,marginLeft:10}}>Login</Link>                            
+                            <Link to="/" style={{color:'blue',marginTop:20,marginLeft:10}}>Login</Link>
+							<GoogleLogin
+								clientId="578186870132-r6epp99lv911k4dccod92frl326jbha2.apps.googleusercontent.com"
+								buttonText="Register with Google"
+								onSuccess={responseSucessGoogle}
+								onFailure={responseErrorGoogle}
+								cookiePolicy={'single_host_origin'}
+								className="btn btn-block"
+								
+							/>,                            
 						</form>
 					</section>
 				</section>

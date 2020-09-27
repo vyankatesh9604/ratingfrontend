@@ -1,10 +1,14 @@
 import React, { useState } from 'react'  
 import './login.css'
-import {Link} from 'react-router-dom'
+import {Link,useHistory} from 'react-router-dom'
 import axios from 'axios'
+import { GoogleLogin } from 'react-google-login';
+
+
 
 
 const Login = () => {
+	const history =useHistory()
 	const[email,setEmail]=useState('')
 	const[password,setPassword]=useState('')
 	const getlogin = (e)=>{
@@ -15,9 +19,27 @@ const Login = () => {
 				alert(res.data.message)
 			}else{
 				alert("Logged IN sucessfully")
+				history.push('/home');
 			}
 			
       })
+	}
+	const responseSucessGoogle = (response) =>{
+		const {email,name,googleId}=response.profileObj
+		axios.post('/users/googlesignin',{email,name,password:googleId})
+		.then((res)=>{
+			if(res.data.status==="fail"){
+				alert(res.data.message)
+			}else{
+				history.push('/home')
+			}
+		}).catch((err)=>{
+			console.log(err)
+		})
+		
+	}
+	const responseErrorGoogle = (response) =>{
+		console.log(response)
 	}
 	return (
 			  <section className="container-fluid">
@@ -36,7 +58,15 @@ const Login = () => {
 							</div>
 							<button className="btn btn-primary btn-block" onClick={(e)=>getlogin(e)}>Submit</button>
                             <label>Click here to</label>
-                            <Link to='/register' style={{color:'blue',marginTop:10}}> Register</Link>                            
+                            <Link to='/register' style={{color:'blue',marginTop:10}}> Register</Link>
+							<GoogleLogin
+								clientId="578186870132-r6epp99lv911k4dccod92frl326jbha2.apps.googleusercontent.com"
+								buttonText="Login with Google"
+								onSuccess={responseSucessGoogle}
+								onFailure={responseErrorGoogle}
+								cookiePolicy={'single_host_origin'}
+								className="btn btn-block"
+							/>,                               
 						</form>
 					</section>
 				</section>
