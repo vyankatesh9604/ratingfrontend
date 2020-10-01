@@ -19,8 +19,8 @@ const Navbar = () => {
 
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav ml-auto">
-                            <li className="nav-item active">
-                                <NavLink activeClassName="menu_active" exact  className="nav-link" to="home">Home <span className="sr-only">(current)</span></NavLink>
+                            <li className="nav-item">
+                                <NavLink activeClassName="menu_active" exact  className="nav-link" to="home">Home </NavLink>
                             </li>
                             <li className="nav-item">
                                 <NavLink activeClassName="menu_active" exact className="nav-link" to="/ratingform">RatingForm</NavLink>
@@ -29,7 +29,7 @@ const Navbar = () => {
                                 <NavLink activeClassName="menu_active" exact className="nav-link" to="/workerinfo">WorkersInfo</NavLink>
                             </li>
                             <li className='nav-item'>
-                            <button className="btn  nav-link" onClick={()=>getlogout()}>LOGOUT</button>
+                            <button className="btn nav-link bg-light" onClick={()=>getlogout()}>LOGOUT</button>
                             </li>
                         </ul>
                     </div>

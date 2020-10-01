@@ -20,6 +20,7 @@ const Login = () => {
 				alert(res.data.message)
 			}else{
 				alert("Logged IN sucessfully")
+				localStorage.setItem('user',JSON.stringify(res.data.user))
 				history.push('/home');
 			}
 			
@@ -32,6 +33,7 @@ const Login = () => {
 			if(res.data.status==="fail"){
 				alert(res.data.message)
 			}else{
+				localStorage.setItem('user',JSON.stringify(res.data.user))
 				history.push('/home')
 			}
 		}).catch((err)=>{

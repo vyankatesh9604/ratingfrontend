@@ -11,15 +11,17 @@ const RatingForm = (props) =>{
     const [health ,setHealth]=useState('')
     const [teamsprit , setTeamsprit]=useState('')
     const [policies ,setPolicies] =useState('')
-
+    const user =JSON.parse( localStorage.getItem('user'))
+    const _id = user._id
     const getrating = (e)=>{
 		e.preventDefault()
-		axios.post('/users/rating', {companyname,training,environment,epf,health,teamsprit,policies})
+		axios.patch('/users/rating',{_id, rating:{companyname,training,environment,epf,health,teamsprit,policies}})
       	.then((res) => {
 			if(res.data.status==="fail"){
 				alert(res.data.message)
 			}else{
-				alert(res.data.message)
+                alert(res.data.message)
+                localStorage.setItem('user',JSON.stringify(res.data.user))
 			
 			}
 			
