@@ -13,10 +13,9 @@ const Home = () => {
         </div>
         
         <div className="marquee bg-primary text-white font-weight-bold">
-                <p>India’s Micro, Small, and Medium Enterprises (MSMEs) base is the largest in the world after China. </p>
-                <div className="ml-5">
-                    <img src={gif} style={{width:'45px',height:'40px',marginTop:10}} alt={gif}></img>
-                </div>
+                
+                <p><img src={gif} style={{width:'45px',height:'40px',marginTop:10}} alt={gif}></img>India’s Micro, Small, and Medium Enterprises (MSMEs) base is the largest in the world after China. </p>
+                
         </div>
 
         <div class="card-deck mt-4 ml-4 mr-4">
