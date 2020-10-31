@@ -9,20 +9,39 @@ const Register = () => {
 	const history =useHistory()
 	const [name,setName]= useState('')
 	const [email,setEmail]=useState('')
-	const [password,setPassword]=useState('')	
+	const [password,setPassword]=useState('')
+	const[role,setRole]=useState('')	
 	
 	
 	const getregister =(e) =>{
-		
 		e.preventDefault()
-		axios.post('/users/signup',{name:name,email:email,password:password})
-		.then((res)=>{
-			if(res.data.status==="fail"){
-				alert(res.data.message)
-			}else{
-				history.push('/')
-			}
-		})
+		if(role===''){
+			alert("Please Select Role ")
+		}
+		else if(role==='worker'){
+			axios.post('/users/signup',{name:name,email:email,password:password})
+			.then((res)=>{
+				if(res.data.status==="fail"){
+					alert(res.data.message)
+				}else{
+					history.push('/')
+				}
+			}).catch((err)=> {
+				console.log(err)
+			})
+		}
+		else{
+			axios.post('/admin/signup',{name:name,email:email,password:password})
+			.then((res)=>{
+				if(res.data.status==="fail"){
+					alert(res.data.message)
+				}else{
+					history.push('/')
+				}
+			}).catch((err)=> {
+				console.log(err)
+			})
+		}
 	}
 	const responseSucessGoogle = (response) =>{
 		const {email,name,googleId}=response.profileObj
@@ -46,6 +65,13 @@ const Register = () => {
 					<section className="col-12 col-sm-6 col-md-3">
 	            		<form className="form-container" onSubmit={(e) => getregister(e)}>
 	            			<h2>REGISTER</h2>
+							<div className="form-group">
+								<select className="w-100" value={role} onChange={(e)=>setRole(e.target.value)}> 
+									<option value=''>Select Role</option>
+									<option value='admin'>Admin</option>
+									<option value='worker'>Worker</option>
+								</select>	
+							</div>
                             <div className="form-group">
 								<input type="text" className="form-control" id="exampleInputName1" placeholder="Enter name" required=" "
 								value={name} onChange={(e)=>setName(e.target.value)}/>

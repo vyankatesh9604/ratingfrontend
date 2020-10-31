@@ -4,9 +4,10 @@ import Login from './component/Login'
 import Register from './component/Register'
 import {Switch,Route} from 'react-router-dom'
 import Home from './component/Home';
-
+import CompanyInfo from './component/CompanyInfo'
 import RatingForm from './component/RatingForm'
 import WorkerInfo from './component/WorkerInfo'
+import HomeAdmin from './component/HomeAdmin';
 function App() {
   return (
     <>
@@ -17,6 +18,8 @@ function App() {
       <Route exact path ='/home' component={Home}/>
       <Route exact path ='/ratingform' component={RatingForm}/>
       <Route exact path ='/workerinfo' component={WorkerInfo}/>
+      <Route exact path ='/homeadmin' component={HomeAdmin}/>
+      <Route exact path ='/companyinfo' component={CompanyInfo}/>
       
     </Switch>
   </>

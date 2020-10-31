@@ -11,20 +11,43 @@ const Login = () => {
 	const history =useHistory()
 	const[email,setEmail]=useState('')
 	const[password,setPassword]=useState('')
+	const[role,setRole]=useState('')
 	
 	const getlogin = (e)=>{
 		e.preventDefault()
-		axios.post('/users/signin', {email:email, password:password})
-      	.then((res) => {
-			if(res.data.status==="fail"){
-				alert(res.data.message)
-			}else{
-				alert("Logged IN sucessfully")
-				localStorage.setItem('user',JSON.stringify(res.data.user))
-				history.push('/home');
-			}
-			
-      })
+		if(role===''){
+			alert("Please select role")
+		}
+		else if(role==='worker'){
+			axios.post('/users/signin', {email:email, password:password})
+			.then((res) => {
+				if(res.data.status==="fail"){
+					alert(res.data.message)
+				}else{
+					alert("Logged IN sucessfully")
+					localStorage.setItem('user',JSON.stringify(res.data.user))
+					history.push('/home');
+				}
+				
+			}).catch((err)=>{
+				console.log(err)
+			})
+		}
+		else{
+			axios.post('/admin/signin', {email:email, password:password})
+			.then((res) => {
+				if(res.data.status==="fail"){
+					alert(res.data.message)
+				}else{
+					alert("Logged IN sucessfully")
+					localStorage.setItem('user',JSON.stringify(res.data.user))
+					history.push('/homeadmin');
+				}
+				
+			}).catch((err)=>{
+				console.log(err)
+			})
+		}
 	}
 	const responseSucessGoogle = (response) =>{
 		const {email,name,googleId}=response.profileObj
@@ -50,6 +73,13 @@ const Login = () => {
 					<section className="col-12 col-sm-6 col-md-3">
 	            		<form className="form-container">
 	            			<h2>LOGIN</h2>
+							<div className="form-group">
+								<select className="w-100" value={role} onChange={(e)=>setRole(e.target.value)}> 
+									<option value=''>Select Role</option>
+									<option value='admin'>Admin</option>
+									<option value='worker'>Worker</option>
+								</select>	
+							</div>
 							<div className="form-group">
 								<label>Email address</label>
 								<input type="email" className="form-control" id="exampleInputEmail1"value={email} onChange={(e)=>setEmail(e.target.value)} placeholder="Enter Email" required=" "/>
